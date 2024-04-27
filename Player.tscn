@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://1n10772q4f5i"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_nkwwo"]
+[ext_resource type="Texture2D" uid="uid://4yd4h3kld2go" path="res://assets/Spaceships/Spaceship#02(24x24).png" id="2_am4ri"]
+[ext_resource type="AudioStream" uid="uid://bulc6o0iiogvv" path="res://assets/Sounds/hitHurt.wav" id="3_upkok"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jlivu"]
+size = Vector2(40, 40)
+
+[sub_resource type="Gradient" id="Gradient_wiwdc"]
+offsets = PackedFloat32Array(0, 0.6)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_nkwwo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_am4ri")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jlivu")
+
+[node name="Trails" type="Node2D" parent="."]
+
+[node name="RightTrail" type="Line2D" parent="Trails"]
+position = Vector2(15, -6.545)
+points = PackedVector2Array(0, 40, 0, 22)
+width = 1.33
+gradient = SubResource("Gradient_wiwdc")
+
+[node name="LeftTrail" type="Line2D" parent="Trails"]
+position = Vector2(-15, -6.545)
+points = PackedVector2Array(0, 40, 0, 22)
+width = 1.33
+gradient = SubResource("Gradient_wiwdc")
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_upkok")

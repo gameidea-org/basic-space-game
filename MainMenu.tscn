@@ -1,0 +1,137 @@
+[gd_scene load_steps=16 format=3 uid="uid://ce5xn17eu8skw"]
+
+[ext_resource type="Script" path="res://MainMenu.gd" id="1_w1pnc"]
+[ext_resource type="Texture2D" uid="uid://cy01qfp4hr1of" path="res://assets/Background/Space01.png" id="1_wmshu"]
+[ext_resource type="Texture2D" uid="uid://0g1l7srrrquo" path="res://assets/Spaceships/Spaceship#02(24x24)SpriteSheet.png" id="3_wo2u3"]
+[ext_resource type="AudioStream" uid="uid://baempfqc2o1i6" path="res://assets/Music/3. Goodbye Sweet Alien.wav" id="4_p7scp"]
+[ext_resource type="Shader" path="res://ScreenSpaceShader.gdshader" id="5_tusa8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vabj4"]
+atlas = ExtResource("3_wo2u3")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yw3aj"]
+atlas = ExtResource("3_wo2u3")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bj6px"]
+atlas = ExtResource("3_wo2u3")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_45j0e"]
+atlas = ExtResource("3_wo2u3")
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iy2cq"]
+atlas = ExtResource("3_wo2u3")
+region = Rect2(128, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbqqa"]
+atlas = ExtResource("3_wo2u3")
+region = Rect2(160, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wccfc"]
+atlas = ExtResource("3_wo2u3")
+region = Rect2(192, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5b0md"]
+atlas = ExtResource("3_wo2u3")
+region = Rect2(224, 224, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8rkfl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vabj4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yw3aj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bj6px")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_45j0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iy2cq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hbqqa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wccfc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5b0md")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aa513"]
+shader = ExtResource("5_tusa8")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(640, 480)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 15.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.05
+shader_parameter/noise_opacity = 0.3
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.1
+shader_parameter/aberration = 0.03
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.4
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.146
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w1pnc")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -207.0
+offset_right = 1200.0
+offset_bottom = 421.0
+texture = ExtResource("1_wmshu")
+
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 242.0
+offset_top = 214.0
+offset_right = 373.0
+offset_bottom = 281.0
+text = "PLAY GAME"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(305, 165)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_8rkfl")
+frame_progress = 0.887025
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_p7scp")
+autoplay = true
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_aa513")
+offset_right = 608.0
+offset_bottom = 404.0
+mouse_filter = 2
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]

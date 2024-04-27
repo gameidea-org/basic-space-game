@@ -1,6 +1,102 @@
-[gd_scene load_steps=2 format=3 uid="uid://cn77hk4ijf1gq"]
+[gd_scene load_steps=8 format=3 uid="uid://cn77hk4ijf1gq"]
 
-[ext_resource type="Script" path="res://game.gd" id="1_2uiv6"]
+[ext_resource type="Texture2D" uid="uid://cy01qfp4hr1of" path="res://assets/Background/Space01.png" id="1_28e3s"]
+[ext_resource type="Script" path="res://World.gd" id="1_rcfon"]
+[ext_resource type="PackedScene" uid="uid://1n10772q4f5i" path="res://Player.tscn" id="2_6umxa"]
+[ext_resource type="Texture2D" uid="uid://b075qdovcfeuu" path="res://assets/GUI/GUI.png" id="4_q1d0v"]
+[ext_resource type="Shader" path="res://ScreenSpaceShader.gdshader" id="5_bmo23"]
+[ext_resource type="AudioStream" uid="uid://draxxtwj75vsx" path="res://assets/Music/1. Into The Spaceship.wav" id="6_56ffo"]
 
-[node name="world" type="Node2D"]
-script = ExtResource("1_2uiv6")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ufk2k"]
+shader = ExtResource("5_bmo23")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(640, 480)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 15.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.05
+shader_parameter/noise_opacity = 0.3
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.1
+shader_parameter/aberration = 0.03
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.4
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.146
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_rcfon")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(287, 202)
+scale = Vector2(1.41, 1.41)
+texture = ExtResource("1_28e3s")
+
+[node name="Player" parent="." instance=ExtResource("2_6umxa")]
+position = Vector2(365, 353)
+
+[node name="GUI" type="Control" parent="."]
+z_index = 6
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="NinePatchRect" parent="GUI"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 12.0
+offset_right = 110.0
+offset_bottom = 41.0
+texture = ExtResource("4_q1d0v")
+region_rect = Rect2(50, 34, 44, 12)
+
+[node name="HealthLabel" type="Label" parent="GUI/HealthBar"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 7.0
+offset_right = 78.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "HEALTH 100"
+
+[node name="ScoreBar" type="NinePatchRect" parent="GUI"]
+layout_mode = 0
+offset_left = 483.625
+offset_top = 12.0
+offset_right = 586.625
+offset_bottom = 41.0
+texture = ExtResource("4_q1d0v")
+region_rect = Rect2(50, 34, 44, 12)
+
+[node name="ScoreLabel" type="Label" parent="GUI/ScoreBar"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 7.0
+offset_right = 78.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0.737255, 0.152941, 1)
+theme_override_font_sizes/font_size = 11
+text = "SCORE 0"
+
+[node name="ColorRect" type="ColorRect" parent="GUI"]
+material = SubResource("ShaderMaterial_ufk2k")
+layout_mode = 0
+offset_right = 608.0
+offset_bottom = 404.0
+mouse_filter = 2
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(300, 200)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_56ffo")
+autoplay = true

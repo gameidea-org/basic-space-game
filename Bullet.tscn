@@ -1,0 +1,91 @@
+[gd_scene load_steps=17 format=3 uid="uid://boo2g3mjuxfj8"]
+
+[ext_resource type="Texture2D" uid="uid://b075qdovcfeuu" path="res://assets/GUI/GUI.png" id="1_2g7fn"]
+[ext_resource type="Script" path="res://Bullet.gd" id="1_gqo3m"]
+[ext_resource type="Texture2D" uid="uid://dpcqnaub0qy5j" path="res://assets/FreeVFX/Effect_BigHit/30fps/Frames/Effect_BigHit_1/Effect_BigHit_1_001.png" id="3_tlebx"]
+[ext_resource type="Texture2D" uid="uid://b2s02i2lfjaft" path="res://assets/FreeVFX/Effect_BigHit/30fps/Frames/Effect_BigHit_1/Effect_BigHit_1_002.png" id="4_4jv7v"]
+[ext_resource type="Texture2D" uid="uid://bh4ds3nmyhak5" path="res://assets/FreeVFX/Effect_BigHit/30fps/Frames/Effect_BigHit_1/Effect_BigHit_1_003.png" id="5_jt1mm"]
+[ext_resource type="Texture2D" uid="uid://pa4sxaoslcp6" path="res://assets/FreeVFX/Effect_BigHit/30fps/Frames/Effect_BigHit_1/Effect_BigHit_1_004.png" id="6_3pekg"]
+[ext_resource type="Texture2D" uid="uid://cx86g3mpw7k1" path="res://assets/FreeVFX/Effect_BigHit/30fps/Frames/Effect_BigHit_1/Effect_BigHit_1_005.png" id="7_j6x87"]
+[ext_resource type="Texture2D" uid="uid://dxtff7xcmktv3" path="res://assets/FreeVFX/Effect_BigHit/30fps/Frames/Effect_BigHit_1/Effect_BigHit_1_006.png" id="8_3vnmi"]
+[ext_resource type="Texture2D" uid="uid://bqwbpmh15dru1" path="res://assets/FreeVFX/Effect_BigHit/30fps/Frames/Effect_BigHit_1/Effect_BigHit_1_007.png" id="9_1xg6l"]
+[ext_resource type="Texture2D" uid="uid://clk8xdy4orygy" path="res://assets/FreeVFX/Effect_BigHit/30fps/Frames/Effect_BigHit_1/Effect_BigHit_1_008.png" id="10_0t6s5"]
+[ext_resource type="Texture2D" uid="uid://b452xw3mkekgk" path="res://assets/FreeVFX/Effect_BigHit/30fps/Frames/Effect_BigHit_1/Effect_BigHit_1_009.png" id="11_5g8p7"]
+[ext_resource type="Texture2D" uid="uid://b2at6e4txgoti" path="res://assets/FreeVFX/Effect_BigHit/30fps/Frames/Effect_BigHit_1/Effect_BigHit_1_010.png" id="12_84xcf"]
+[ext_resource type="AudioStream" uid="uid://chyi7vd7eyaq8" path="res://assets/Sounds/explosion (4).wav" id="13_eodxh"]
+
+[sub_resource type="Gradient" id="Gradient_8g2o5"]
+offsets = PackedFloat32Array(0.513333, 1)
+colors = PackedColorArray(1, 0.866667, 0.396078, 1, 0, 0, 0, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r5vsw"]
+radius = 6.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tw1ov"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_tlebx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4jv7v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jt1mm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_3pekg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_j6x87")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_3vnmi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_1xg6l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_0t6s5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_5g8p7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_84xcf")
+}],
+"loop": false,
+"name": &"default",
+"speed": 30.0
+}]
+
+[node name="Bullet" type="Area2D"]
+script = ExtResource("1_gqo3m")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1, 2)
+texture = ExtResource("1_2g7fn")
+region_enabled = true
+region_rect = Rect2(123, 51, 5, 6)
+
+[node name="Line2D" type="Line2D" parent="Sprite2D"]
+points = PackedVector2Array(0, 0, 0, 26)
+width = 4.0
+gradient = SubResource("Gradient_8g2o5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_r5vsw")
+
+[node name="Explosion" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(-3, -1)
+scale = Vector2(0.245, 0.245)
+sprite_frames = SubResource("SpriteFrames_tw1ov")
+frame = 9
+frame_progress = 1.0
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_eodxh")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

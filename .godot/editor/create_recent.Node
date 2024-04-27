@@ -1,0 +1,14 @@
+ColorRect
+AudioStreamPlayer
+AnimatedSprite2D
+Button
+TextureRect
+AudioStreamPlayer2D
+Camera2D
+Line2D
+Sprite2D
+CollisionShape2D
+Area2D
+Control
+Label
+NinePatchRect

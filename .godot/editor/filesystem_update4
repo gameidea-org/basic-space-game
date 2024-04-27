@@ -1,0 +1,9 @@
+res://World.tscn
+res://ScreenSpaceShader.gdshader
+res://Player.tscn
+res://Asteroid1.tscn
+res://Asteroid2.tscn
+res://Enemy.tscn
+res://Bullet.tscn
+res://MainMenu.tscn
+res://World.gd
